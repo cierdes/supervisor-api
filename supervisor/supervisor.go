@@ -60,6 +60,13 @@ func (s *Supervisor)GetState()(*SupervisorStatus,error){
 	return ret,err
 }
 
+func (s *Supervisor)GetPID()(int,error){
+	var ret int
+	err := s.client.Call("supervisor.getPID", nil, &ret)
+
+	return ret,err
+}
+
 
 func (s *Supervisor)GetProcessInfo(name string)(*SupervisorProcessInfo,error){
 	var ret *SupervisorProcessInfo = new(SupervisorProcessInfo)
