@@ -67,6 +67,13 @@ func (s *Supervisor)GetPID()(int,error){
 	return ret,err
 }
 
+func (s *Supervisor)Restart()(bool,error){
+	var ret bool
+	err := s.client.Call("supervisor.restart", nil, &ret)
+
+	return ret,err
+}
+
 
 func (s *Supervisor)GetProcessInfo(name string)(*SupervisorProcessInfo,error){
 	var ret *SupervisorProcessInfo = new(SupervisorProcessInfo)
