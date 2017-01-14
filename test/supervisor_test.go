@@ -286,3 +286,18 @@ func Test_Restart(t *testing.T){
 
 	t.Log("supervisor restart status:", r)
 }
+
+func Test_ShutDown(t *testing.T){
+	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.ShutDown()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("supervisor shutdown status:", r)
+}
