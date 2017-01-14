@@ -271,3 +271,18 @@ func Test_GetPID(t *testing.T){
 
 	t.Log("supervisor PID:", r)
 }
+
+func Test_Restart(t *testing.T){
+	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.Restart()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("supervisor restart status:", r)
+}
