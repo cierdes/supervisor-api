@@ -74,6 +74,13 @@ func (s *Supervisor)Restart()(bool,error){
 	return ret,err
 }
 
+func (s *Supervisor)ShutDown()(bool,error){
+	var ret bool
+	err := s.client.Call("supervisor.shutdown", nil, &ret)
+
+	return ret,err
+}
+
 
 func (s *Supervisor)GetProcessInfo(name string)(*SupervisorProcessInfo,error){
 	var ret *SupervisorProcessInfo = new(SupervisorProcessInfo)
