@@ -225,3 +225,49 @@ func Test_ReloadConfig(t *testing.T) {
 
 	t.Log("reload config status:", r)
 }
+
+func Test_RemoveProcessGroup(t *testing.T){
+	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r, err := client.RemoveProcessGroup("cesi")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("remove process group status:", r)
+}
+
+func Test_AddProcessGroup(t *testing.T){
+	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.AddProcessGroup("cesi")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("add process group status:", r)
+}
+
+func Test_GetState(t *testing.T){
+	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.GetState()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("statecode:", r.StateCode)
+	t.Log("statename:", r.StateName)
+}
