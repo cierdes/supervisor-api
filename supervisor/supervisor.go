@@ -38,6 +38,7 @@ func (s *Supervisor)Close(){
 	}
 }
 
+
 func (s *Supervisor)ListMethods()([]string,error){
 	var ret []string
 	err := s.client.Call("system.listMethods",nil, &ret)
@@ -51,6 +52,14 @@ func (s *Supervisor)MethodHelp(method string)(string,error){
 
 	return ret,err
 }
+
+func (s *Supervisor)GetState()(*SupervisorStatus,error){
+	var ret *SupervisorStatus = new(SupervisorStatus)
+	err := s.client.Call("supervisor.getState", nil, ret)
+
+	return ret,err
+}
+
 
 func (s *Supervisor)GetProcessInfo(name string)(*SupervisorProcessInfo,error){
 	var ret *SupervisorProcessInfo = new(SupervisorProcessInfo)
@@ -105,16 +114,24 @@ func (s *Supervisor)StopProcessGourp(name string, wait bool)([]SupervisorProcess
 	return ret,err
 }
 
-func (s *Supervisor)StopAllProcesses(wait bool)([]SupervisorProcessStatus,error){
-	var ret []SupervisorProcessStatus
-	err := s.client.Call("supervisor.stopAllProcesses", wait, &ret)
+//首先要先停掉该进程组，这个进程组才能删除成功
+func (s *Supervisor)RemoveProcessGroup(name string)(bool,error){
+	var ret bool
+	err := s.client.Call("supervisor.removeProcessGroup", name, &ret)
 
 	return ret,err
 }
 
-func (s *Supervisor)ReloadConfig()(bool,error){
+func (s *Supervisor)AddProcessGroup(name string)(bool,error){
 	var ret bool
-	err := s.client.Call("supervisor.reloadConfig", nil, &ret)
+	err := s.client.Call("supervisor.addProcessGroup", name, &ret)
+
+	return ret,err
+}
+
+func (s *Supervisor)StopAllProcesses(wait bool)([]SupervisorProcessStatus,error){
+	var ret []SupervisorProcessStatus
+	err := s.client.Call("supervisor.stopAllProcesses", wait, &ret)
 
 	return ret,err
 }
