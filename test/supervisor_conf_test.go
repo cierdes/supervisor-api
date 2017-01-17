@@ -543,3 +543,15 @@ func Test_RPCInterface(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_SupervisorConf(t *testing.T){
+	Test_UnixHttpServer(t)
+	Test_Supervisord(t)
+	Test_Supervisorctl(t)
+	Test_RPCInterface(t)
+	Test_Program(t)
+	Test_InetHttpServer(t)
+	Test_Include(t)
+	Test_Group(t)
+	Test_EventListener(t)
+}

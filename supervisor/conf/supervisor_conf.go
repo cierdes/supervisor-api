@@ -8,6 +8,7 @@ package conf
 
 import (
 	"errors"
+	"io/ioutil"
 )
 
 type SupervisorConf struct {
@@ -22,7 +23,15 @@ type SupervisorConf struct {
 	rpcInterfaces []*confRPCInterface
 }
 
+func (c *SupervisorConf)EncodeToFile(file string)error{
+	return ioutil.WriteFile(file,[]byte(c.encode()),0777)
+}
+
 func (c *SupervisorConf)EncodeToString()string{
+	return c.encode()
+}
+
+func (c *SupervisorConf)encode()string{
 	var ret string
 
 	if c.unixHttpServer != nil{
