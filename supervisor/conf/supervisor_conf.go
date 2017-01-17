@@ -18,7 +18,7 @@ type SupervisorConf struct {
 	programs []*confProgram
 	groups []*confGroup
 	include *confInclude
-	//EventListener *svrConfEventListener
+	eventListeners []*confEventListener
 	//RpcInterface *svrConfRPCInterface
 }
 
@@ -56,6 +56,11 @@ func (c *SupervisorConf)EncodeToString()string{
 	}
 
 	for _,v := range c.groups{
+		ret += v.encode()
+		ret += "\n\n"
+	}
+
+	for _,v := range c.eventListeners{
 		ret += v.encode()
 		ret += "\n\n"
 	}
@@ -134,6 +139,23 @@ func (c *SupervisorConf)WriteGroup(name string, key string, val string)error{
 	}
 
 	c.groups = append(c.groups, g)
+	return nil
+}
+
+func (c *SupervisorConf)WriteEventListener(name string, key string, val string)error{
+	for _,v := range c.eventListeners{
+		if v.name == name{
+			return setValue(v.content, key, val)
+		}
+	}
+
+	e := newConfEventListener(name)
+	err := setValue(e.content, key, val)
+	if err != nil{
+		return err
+	}
+
+	c.eventListeners = append(c.eventListeners, e)
 	return nil
 }
 

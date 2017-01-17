@@ -363,3 +363,167 @@ func Test_Group(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_EventListener(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteEventListener("hello","command","/bin/cat")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","process_name","%(program_name)s")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","numprocs","1")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","events","PROCESS_STATE")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","buffer_size","10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "directory", "/tmp")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "umask","022")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","priority", "999")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","autostart","true")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "autorestart", "unexpected")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "startsecs", "10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "startretries", "3")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "exitcodes", "0,2")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "stopsignal", "TERM")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "stopwaitsecs", "10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "stopasgroup", "false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","killasgroup","false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","user", "chrism")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "redirect_stderr","false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","stdout_logfile","/a/path")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","stdout_logfile_maxbytes","1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","stdout_logfile_backups","10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+
+	err = conf.WriteEventListener("hello","stdout_events_enabled", "false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "stderr_logfile","/a/path")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "stderr_logfile_maxbytes", "1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "stderr_logfile_backups","10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello","stderr_logfile_maxbytes","1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+
+	err = conf.WriteEventListener("hello", "stderr_events_enabled", "false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "environment", `A="1",B="2"`)
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("hello", "serverurl", "AUTO")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteEventListener("kkkk","serverurl","AUTO")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+
+	t.Log(conf.EncodeToString())
+}
