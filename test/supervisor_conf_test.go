@@ -527,3 +527,19 @@ func Test_EventListener(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_RPCInterface(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteRPCInterface("hello","supervisor.rpcinterface_factory","my.package:make_another_rpcinterface")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteRPCInterface("hello","retries","1")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log(conf.EncodeToString())
+}
