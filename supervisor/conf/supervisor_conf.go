@@ -1,66 +1,74 @@
-package supervisor
+/*
+@author: foolbread
+@time: 2017-01-17
+@file: supervisor-api/supervisor/conf/supervisor_conf.go
+*/
 
-type SupervisorConf struct {
-	UnixHttpServer *svrConfUnixHttpServer
-	InetHttpServer *svrConfInetHttpServer
-	Supervisord *svrConfSupervisord
-	Supervisorctl *svrConfSupervisorctl
-	Programs []*svrConfFcgiProgram
-	Groups []*svrConfGroup
-	EventListener *svrConfEventListener
-	RpcInterface *svrConfRPCInterface
-}
+package conf
 
-var (
-	unxitHttpServer []string = []string{"file","chmod","chown","username","password"}
+import (
+	"errors"
 )
 
-type svrConfUnixHttpServer struct {
-	content map[string]string
+type SupervisorConf struct {
+	UnixHttpServer *confUnixHttpServer
+	InetHttpServer *confInetHttpServer
+	//Supervisord *svrConfSupervisord
+	//Supervisorctl *svrConfSupervisorctl
+	//Programs []*svrConfFcgiProgram
+	//Groups []*svrConfGroup
+	//EventListener *svrConfEventListener
+	//RpcInterface *svrConfRPCInterface
 }
 
-func newSvrConfUnixHttpServer()*svrConfUnixHttpServer{
-	r := new(svrConfUnixHttpServer)
-	r.content = make(map[string]string)
-	for _,v := range unxitHttpServer{
-		r.content[v] = ""
+func (c *SupervisorConf)EncodeToString()string{
+	var ret string
+
+	if c.UnixHttpServer != nil{
+		ret += c.UnixHttpServer.encode()
 	}
 
-	return r
+	if c.InetHttpServer != nil{
+		ret += c.InetHttpServer.encode()
+	}
+
+	return ret
 }
 
-type svrConfInetHttpServer struct {
+func (c *SupervisorConf)WriteUnixHttpServer(key string, val string)error{
+	if c.UnixHttpServer == nil{
+		c.UnixHttpServer = newConfUnixHttpServer()
+	}
 
+	return setValue(c.UnixHttpServer.content, key, val)
 }
 
-type svrConfSupervisord struct {
+func (c *SupervisorConf)WriteInetHttpServer(key string, val string)error{
+	if c.InetHttpServer == nil{
+		c.InetHttpServer = newConfInetHttpServer()
+	}
 
+	return setValue(c.InetHttpServer.content, key, val)
 }
 
-type svrConfSupervisorctl struct {
+//////////////////////////////////////////////////////////////////////////////////////////
+func encode(data map[string]string)[]string{
+	var ret []string
+	for k,v := range data{
+		if len(v) > 0{
+			ret = append(ret, k+"="+v)
+		}
+	}
 
+	return ret
 }
 
-type svrConfInclude struct {
+func setValue(data map[string]string, key string, val string)error{
+	_,ok := data[key]
+	if !ok {
+		return errors.New("key is invalid!")
+	}
 
-}
-
-type svrConfProgram struct {
-
-}
-
-type svrConfGroup struct {
-
-}
-
-type svrConfEventListener struct {
-
-}
-
-type svrConfRPCInterface struct {
-
-}
-
-type svrConfFcgiProgram struct {
-
+	data[key] = val
+	return nil
 }
