@@ -30,7 +30,11 @@ func (c *confUnixHttpServer)encode()string{
 	var strs []string
 	strs = append(strs,"[unix_http_server]")
 
-	strs = append(strs, encode(c.content)...)
+	for _, v :=range unxitHttpServerKeys{
+		if len(c.content[v]) > 0{
+			strs = append(strs, v+"="+c.content[v])
+		}
+	}
 
 	return strings.Join(strs,"\n")
 }

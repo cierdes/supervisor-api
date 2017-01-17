@@ -5,7 +5,9 @@
 */
 package conf
 
-import "strings"
+import (
+	"strings"
+)
 
 var inetHttpServerKeys []string = []string{"port","username","password"}
 
@@ -27,7 +29,11 @@ func (c *confInetHttpServer)encode()string{
 	var strs []string
 	strs = append(strs, "[inet_http_server]")
 
-	strs = append(strs, encode(c.content)...)
+	for _,v :=range inetHttpServerKeys{
+		if len(c.content[v]) > 0{
+			strs = append(strs, v+"="+c.content[v])
+		}
+	}
 
 	return strings.Join(strs,"\n")
 }

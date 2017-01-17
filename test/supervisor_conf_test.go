@@ -62,3 +62,89 @@ func Test_InetHttpServer(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_Supervisord(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteSupervisord("logfile","/tmp/supervisord.log")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("logfile_maxbytes","50MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("logfile_backups","10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("loglevel","info")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("pidfile","/tmp/supervisord.pid")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("nodaemon","false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("minfds","1024")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("minprocs","200")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("umask","022")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("user","chrism")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err =conf.WriteSupervisord("identifier","supervisor")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("directory","/tmp")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("nocleanup","true")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("childlogdir","/tmp")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("strip_ansi","false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisord("environment",`KEY1="value1",KEY2="value2"`)
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log(conf.EncodeToString())
+}

@@ -11,9 +11,9 @@ import (
 )
 
 type SupervisorConf struct {
-	UnixHttpServer *confUnixHttpServer
-	InetHttpServer *confInetHttpServer
-	//Supervisord *svrConfSupervisord
+	unixHttpServer *confUnixHttpServer
+	inetHttpServer *confInetHttpServer
+	supervisord    *confSupervisord
 	//Supervisorctl *svrConfSupervisorctl
 	//Programs []*svrConfFcgiProgram
 	//Groups []*svrConfGroup
@@ -24,45 +24,46 @@ type SupervisorConf struct {
 func (c *SupervisorConf)EncodeToString()string{
 	var ret string
 
-	if c.UnixHttpServer != nil{
-		ret += c.UnixHttpServer.encode()
+	if c.unixHttpServer != nil{
+		ret += c.unixHttpServer.encode()
 	}
 
-	if c.InetHttpServer != nil{
-		ret += c.InetHttpServer.encode()
+	if c.inetHttpServer != nil{
+		ret += c.inetHttpServer.encode()
+	}
+
+	if c.supervisord != nil{
+		ret += c.supervisord.encode()
 	}
 
 	return ret
 }
 
 func (c *SupervisorConf)WriteUnixHttpServer(key string, val string)error{
-	if c.UnixHttpServer == nil{
-		c.UnixHttpServer = newConfUnixHttpServer()
+	if c.unixHttpServer == nil{
+		c.unixHttpServer = newConfUnixHttpServer()
 	}
 
-	return setValue(c.UnixHttpServer.content, key, val)
+	return setValue(c.unixHttpServer.content, key, val)
 }
 
 func (c *SupervisorConf)WriteInetHttpServer(key string, val string)error{
-	if c.InetHttpServer == nil{
-		c.InetHttpServer = newConfInetHttpServer()
+	if c.inetHttpServer == nil{
+		c.inetHttpServer = newConfInetHttpServer()
 	}
 
-	return setValue(c.InetHttpServer.content, key, val)
+	return setValue(c.inetHttpServer.content, key, val)
+}
+
+func (c *SupervisorConf)WriteSupervisord(key string, val string)error{
+	if c.supervisord == nil{
+		c.supervisord = newConfSupervisord()
+	}
+
+	return setValue(c.supervisord.content, key, val)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-func encode(data map[string]string)[]string{
-	var ret []string
-	for k,v := range data{
-		if len(v) > 0{
-			ret = append(ret, k+"="+v)
-		}
-	}
-
-	return ret
-}
-
 func setValue(data map[string]string, key string, val string)error{
 	_,ok := data[key]
 	if !ok {
