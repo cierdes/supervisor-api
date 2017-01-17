@@ -15,7 +15,7 @@ type SupervisorConf struct {
 	inetHttpServer *confInetHttpServer
 	supervisord    *confSupervisord
 	supervisorctl *confSupervisorctl
-	//Programs []*svrConfFcgiProgram
+	programs []*confProgram
 	//Groups []*svrConfGroup
 	//EventListener *svrConfEventListener
 	//RpcInterface *svrConfRPCInterface
@@ -26,18 +26,27 @@ func (c *SupervisorConf)EncodeToString()string{
 
 	if c.unixHttpServer != nil{
 		ret += c.unixHttpServer.encode()
+		ret += "\n\n"
 	}
 
 	if c.inetHttpServer != nil{
 		ret += c.inetHttpServer.encode()
+		ret += "\n\n"
 	}
 
 	if c.supervisord != nil{
 		ret += c.supervisord.encode()
+		ret += "\n\n"
 	}
 
 	if c.supervisorctl != nil{
 		ret += c.supervisorctl.encode()
+		ret += "\n\n"
+	}
+
+	for _, v := range c.programs{
+		ret += v.encode()
+		ret += "\n\n"
 	}
 
 	return ret
@@ -73,6 +82,23 @@ func (c *SupervisorConf)WriteSupervisorctl(key string, val string)error{
 	}
 
 	return setValue(c.supervisorctl.content, key, val)
+}
+
+func (c *SupervisorConf)WriteProgram(name string, key string, val string)error{
+	for _,v :=range c.programs{
+		if v.name == name{
+			return setValue(v.content, key, val)
+		}
+	}
+
+	p := newConfProgram(name)
+	err := setValue(p.content, key, val)
+	if err != nil{
+		return err
+	}
+
+	c.programs = append(c.programs, p)
+	return nil
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

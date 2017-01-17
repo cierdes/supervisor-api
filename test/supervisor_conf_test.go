@@ -174,3 +174,165 @@ func Test_Supervisorctl(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_Program(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteProgram("hello","command","/bin/cat")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","process_name","%(program_name)s")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","numprocs","1")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "directory", "/tmp")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "umask","022")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","priority", "999")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","autostart","true")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "autorestart", "unexpected")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "startsecs", "10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "startretries", "3")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "exitcodes", "0,2")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stopsignal", "TERM")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stopwaitsecs", "10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stopasgroup", "false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","killasgroup","false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","user", "chrism")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "redirect_stderr","false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","stdout_logfile","/a/path")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","stdout_logfile_maxbytes","1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","stdout_logfile_backups","10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stdout_capture_maxbytes","1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","stdout_events_enabled", "false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stderr_logfile","/a/path")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stderr_logfile_maxbytes", "1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stderr_logfile_backups","10")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","stderr_logfile_maxbytes","1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello","stderr_capture_maxbytes", "1MB")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "stderr_events_enabled", "false")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "environment", `A="1",B="2"`)
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("hello", "serverurl", "AUTO")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteProgram("kkkk","serverurl","AUTO")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+
+	t.Log(conf.EncodeToString())
+}
