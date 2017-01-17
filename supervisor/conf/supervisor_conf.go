@@ -14,7 +14,7 @@ type SupervisorConf struct {
 	unixHttpServer *confUnixHttpServer
 	inetHttpServer *confInetHttpServer
 	supervisord    *confSupervisord
-	//Supervisorctl *svrConfSupervisorctl
+	supervisorctl *confSupervisorctl
 	//Programs []*svrConfFcgiProgram
 	//Groups []*svrConfGroup
 	//EventListener *svrConfEventListener
@@ -34,6 +34,10 @@ func (c *SupervisorConf)EncodeToString()string{
 
 	if c.supervisord != nil{
 		ret += c.supervisord.encode()
+	}
+
+	if c.supervisorctl != nil{
+		ret += c.supervisorctl.encode()
 	}
 
 	return ret
@@ -61,6 +65,14 @@ func (c *SupervisorConf)WriteSupervisord(key string, val string)error{
 	}
 
 	return setValue(c.supervisord.content, key, val)
+}
+
+func (c *SupervisorConf)WriteSupervisorctl(key string, val string)error{
+	if c.supervisorctl == nil{
+		c.supervisorctl = newConfSupervisorctl()
+	}
+
+	return setValue(c.supervisorctl.content, key, val)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

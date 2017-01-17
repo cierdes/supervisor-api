@@ -148,3 +148,29 @@ func Test_Supervisord(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_Supervisorctl(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteSupervisorctl("serverurl","unix:///tmp/supervisor.sock")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisorctl("username","chris")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisorctl("password","123")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteSupervisorctl("prompt","mysupervisor")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log(conf.EncodeToString())
+}
