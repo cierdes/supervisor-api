@@ -347,3 +347,19 @@ func Test_Include(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_Group(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteGroup("hello","programs","bar,baz")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	err = conf.WriteGroup("hello","priority","999")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log(conf.EncodeToString())
+}
