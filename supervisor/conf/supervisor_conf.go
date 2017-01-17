@@ -17,6 +17,7 @@ type SupervisorConf struct {
 	supervisorctl *confSupervisorctl
 	programs []*confProgram
 	//Groups []*svrConfGroup
+	include *confInclude
 	//EventListener *svrConfEventListener
 	//RpcInterface *svrConfRPCInterface
 }
@@ -46,6 +47,11 @@ func (c *SupervisorConf)EncodeToString()string{
 
 	for _, v := range c.programs{
 		ret += v.encode()
+		ret += "\n\n"
+	}
+
+	if c.include != nil{
+		ret += c.include.encode()
 		ret += "\n\n"
 	}
 
@@ -99,6 +105,14 @@ func (c *SupervisorConf)WriteProgram(name string, key string, val string)error{
 
 	c.programs = append(c.programs, p)
 	return nil
+}
+
+func (c *SupervisorConf)WriteInclude(key string, val string)error{
+	if c.include == nil{
+		c.include = newConfInclude()
+	}
+
+	return setValue(c.include.content, key, val)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

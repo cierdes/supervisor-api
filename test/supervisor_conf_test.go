@@ -336,3 +336,14 @@ func Test_Program(t *testing.T){
 
 	t.Log(conf.EncodeToString())
 }
+
+func Test_Include(t *testing.T){
+	var conf conf.SupervisorConf
+
+	err := conf.WriteInclude("files","/an/absolute/filename.conf /an/absolute/8.conf foo.cnf config??.conf")
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log(conf.EncodeToString())
+}
