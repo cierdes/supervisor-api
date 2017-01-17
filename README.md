@@ -11,7 +11,6 @@ supervisor client by golang
       	"fmt"
     )
 
-
 	func main(){
       	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
 		if err != nil {
