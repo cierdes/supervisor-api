@@ -3,7 +3,6 @@
 @time: 2017-01-17
 @file: supervisor-api/supervisor/conf/supervisor_conf.go
 */
-
 package conf
 
 import (
