@@ -6,12 +6,12 @@ supervisor client by golang
 ## supervisor-client
 
 ```go
-	import(
+    import(
       	"github.com/cierdes/supervisor-api/supervisor"
       	"fmt"
     )
     
-	func main(){
+    func main(){
       	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
 		if err != nil {
 			fmt.Println(err)
@@ -26,6 +26,6 @@ supervisor client by golang
 		}
       
       	 fmt.Println(r)
-	}
+    }
 	
 ```
