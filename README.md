@@ -13,19 +13,19 @@ supervisor client by golang
     
     func main(){
       	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
-		if err != nil {
-			fmt.Println(err)
-          	 return
-		}
-		defer client.Close()
+	if err != nil {
+		fmt.Println(err)
+          	return
+	}
+	defer client.Close()
 
-		r, err := client.ListMethods()
-		if err != nil {
-			fmt.Println(err)
-          	 return
-		}
+	r, err := client.ListMethods()
+	if err != nil {
+		fmt.Println(err)
+          	return
+	}
       
-      	 fmt.Println(r)
+      	fmt.Println(r)
     }
 	
 ```
