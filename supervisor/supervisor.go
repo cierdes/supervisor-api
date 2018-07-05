@@ -55,7 +55,7 @@ func (s *Supervisor)MethodHelp(method string)(string,error){
 
 func (s *Supervisor)GetSupervisorVersion()(string,error){
 	var ret string
-	err := s.client.Call("supervisor.getVersion",nil,&ret)
+	err := s.client.Call("supervisor.getSupervisorVersion",nil,&ret)
 
 	return ret,err
 }
