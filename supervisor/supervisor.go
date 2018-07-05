@@ -55,7 +55,7 @@ func (s *Supervisor)MethodHelp(method string)(string,error){
 
 func (s *Supervisor)GetAPIVersion()(string,error){
 	var ret string
-	err := s.client.Call("supervisor.getVersion",nil,&ret)
+	err := s.client.Call("supervisor.getAPIVersion",nil,&ret)
 
 	return ret,err
 }
@@ -91,6 +91,15 @@ func (s *Supervisor)GetPID()(int,error){
 func (s *Supervisor)Restart()(bool,error){
 	var ret bool
 	err := s.client.Call("supervisor.restart", nil, &ret)
+
+	return ret,err
+}
+
+//add change remove
+//note:经过测试实际上并没有reload远程的config
+func (s *Supervisor)ReloadConfig()([][][]string,error){
+	var ret [][][]string
+	err := s.client.Call("supervisor.reloadConfig",nil,&ret)
 
 	return ret,err
 }
