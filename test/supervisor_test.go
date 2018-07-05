@@ -12,7 +12,7 @@ import (
 )
 
 func getSupervisorClient()(*supervisor.Supervisor,error){
-	return supervisor.NewSupervisor("172.18.11.170:9001")
+	return supervisor.NewSupervisor("127.0.0.1:9001")
 }
 
 func Test_ListMethod(t *testing.T) {
