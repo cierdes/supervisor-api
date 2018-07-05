@@ -53,6 +53,13 @@ func (s *Supervisor)MethodHelp(method string)(string,error){
 	return ret,err
 }
 
+func (s *Supervisor)GetAPIVersion()(string,error){
+	var ret string
+	err := s.client.Call("supervisor.getVersion",nil,&ret)
+
+	return ret,err
+}
+
 func (s *Supervisor)GetSupervisorVersion()(string,error){
 	var ret string
 	err := s.client.Call("supervisor.getSupervisorVersion",nil,&ret)
