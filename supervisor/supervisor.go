@@ -60,6 +60,13 @@ func (s *Supervisor)GetSupervisorVersion()(string,error){
 	return ret,err
 }
 
+func (s *Supervisor)GetIdentification()(string,error){
+	var ret string
+	err := s.client.Call("supervisor.getIdentification",nil,&ret)
+
+	return ret,err
+}
+
 func (s *Supervisor)GetState()(*SupervisorStatus,error){
 	var ret *SupervisorStatus = new(SupervisorStatus)
 	err := s.client.Call("supervisor.getState", nil, ret)
