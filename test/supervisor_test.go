@@ -11,8 +11,12 @@ import (
 	"github.com/cierdes/supervisor-api/supervisor"
 )
 
+func getSupervisorClient()(*supervisor.Supervisor,error){
+	return supervisor.NewSupervisor("172.18.11.170:9001")
+}
+
 func Test_ListMethod(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +31,7 @@ func Test_ListMethod(t *testing.T) {
 }
 
 func Test_MethodHelp(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +46,7 @@ func Test_MethodHelp(t *testing.T) {
 }
 
 func Test_GetProcessInfo(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -69,8 +73,67 @@ func Test_GetProcessInfo(t *testing.T) {
 	t.Log("pid:", r.Pid)
 }
 
+func Test_GetAPIVersion(t *testing.T){
+	client,err := getSupervisorClient()
+	if err != nil{
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.GetAPIVersion()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("api version:",r)
+}
+
+func Test_GetSupervisorVersion(t *testing.T){
+	client,err := getSupervisorClient()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	r,err := client.GetSupervisorVersion()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("supervisor version:",r)
+}
+
+func Test_GetIdentification(t *testing.T){
+	client,err := getSupervisorClient()
+	if err != nil{
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.GetIdentification()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("identification:",r)
+}
+
+func Test_ReloadConfig(t *testing.T){
+	client,err := getSupervisorClient()
+	if err != nil{
+		t.Fatal(err)
+	}
+	defer client.Close()
+
+	r,err := client.ReloadConfig()
+	if err != nil{
+		t.Fatal(err)
+	}
+
+	t.Log("reload config result:",r)
+}
+
 func Test_GetAllProcessInfo(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -102,7 +165,7 @@ func Test_GetAllProcessInfo(t *testing.T) {
 }
 
 func Test_StartProcess(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -117,7 +180,7 @@ func Test_StartProcess(t *testing.T) {
 }
 
 func Test_StartAllProcesses(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -137,7 +200,7 @@ func Test_StartAllProcesses(t *testing.T) {
 }
 
 func Test_StartProcessGroup(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -157,7 +220,7 @@ func Test_StartProcessGroup(t *testing.T) {
 }
 
 func Test_StopProcess(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -172,7 +235,7 @@ func Test_StopProcess(t *testing.T) {
 }
 
 func Test_StopGroupProcess(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +255,7 @@ func Test_StopGroupProcess(t *testing.T) {
 }
 
 func Test_StopAllProcesses(t *testing.T) {
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -212,7 +275,7 @@ func Test_StopAllProcesses(t *testing.T) {
 }
 
 func Test_RemoveProcessGroup(t *testing.T){
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -227,7 +290,7 @@ func Test_RemoveProcessGroup(t *testing.T){
 }
 
 func Test_AddProcessGroup(t *testing.T){
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -242,7 +305,7 @@ func Test_AddProcessGroup(t *testing.T){
 }
 
 func Test_GetState(t *testing.T){
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -258,7 +321,7 @@ func Test_GetState(t *testing.T){
 }
 
 func Test_GetPID(t *testing.T){
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -273,7 +336,7 @@ func Test_GetPID(t *testing.T){
 }
 
 func Test_Restart(t *testing.T){
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -288,7 +351,7 @@ func Test_Restart(t *testing.T){
 }
 
 func Test_ShutDown(t *testing.T){
-	client, err := supervisor.NewSupervisor("192.168.250.178:9001")
+	client, err := getSupervisorClient()
 	if err != nil {
 		t.Fatal(err)
 	}
